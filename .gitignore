@@ -1,0 +1,28 @@
+# Qt Creator 自动生成的文件
+*.user
+*.pro.user
+*.qbs.user
+*.qmlc
+*.jsc
+
+# 构建目录
+/build-*/
+build/
+
+# 生成的二进制和压缩包
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.zip
+*.tar
+*.gz
+*.7z
+*.dmg
+*.app
+*.msi
+
+# 日志和临时文件
+*.log
+*.tmp

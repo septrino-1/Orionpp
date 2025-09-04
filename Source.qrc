@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>images/Pic1.jpg</file>
+        <file>images/pic2.jpeg</file>
+        <file>images/icons8-save-50.png</file>
+        <file>images/icons8-add-file-50.png</file>
+        <file>images/icons8-file-50.png</file>
+        <file>images/icons8-folder-50.png</file>
+        <file>images/icons8-opened-folder-50.png</file>
+        <file>images/icons8-search-50.png</file>
+        <file>images/logo1.png</file>
+        <file>images/logo2.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix2">
+        <file>fonts/FiraCode-Regular.ttf</file>
+        <file>fonts/JetBrainsMonoNL-Bold.ttf</file>
+        <file>fonts/FiraCode-Bold.ttf</file>
+        <file>fonts/IBMPlexMono-Bold.ttf</file>
+    </qresource>
+</RCC>

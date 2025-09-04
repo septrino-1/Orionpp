@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>811</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">/* TabBar 上的每个 tab */
+QTabBar::tab {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #e0e0e0, stop:1 #c8c8c8); /* 浅灰渐变 */
+    color: #333333;                     /* 文字深灰 */
+    padding: 8px 18px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-right: 2px;
+    border: 1px solid transparent;      /* 防止边框突兀 */
+}
+
+/* 鼠标悬停效果 */
+QTabBar::tab:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #d8d8d8, stop:1 #bfbfbf); /* 悬停渐变更柔和 */
+}
+
+/* 选中状态的 tab */
+QTabBar::tab:selected {
+    background: #f8f8f8;                /* 更柔和的选中背景 */
+    border-bottom: 3px solid #4CAF50;   /* 绿色选中标记 */
+    color: #000000;                      /* 文字黑色 */
+    margin-top: 0px;                     /* 与未选中 tab 对齐 */
+}
+
+/* 未选中状态 tab 的上边距微调 */
+QTabBar::tab:!selected {
+    margin-top: 3px;
+}
+
+/* TabBar 默认靠左排列 */
+QTabWidget::tab-bar {
+    alignment: left;
+}
+</string>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>811</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* ---------- 菜单栏 ---------- */
+QMenuBar {
+    background-color: #f5faff;      /* 浅白，微蓝调 */
+    color: #1a1a1a;                 /* 深灰字体，保证可读性 */
+    padding: 4px;
+}
+
+QMenuBar::item {
+    background: transparent;        /* 默认透明背景 */
+    padding: 6px 12px;              /* 内边距 */
+}
+
+QMenuBar::item:selected {
+    background-color: #cce4ff;      /* 鼠标悬停：浅蓝高亮 */
+    color: #003366;                 /* 深蓝文字 */
+}
+
+/* ---------- 下拉菜单 ---------- */
+QMenu {
+    background-color: #f8fbff;      /* 下拉菜单背景：浅白微蓝 */
+    color: #1a1a1a;                 /* 文字颜色深灰 */
+    border: 1px solid #aaccee;      /* 边框：淡蓝 */
+}
+
+QMenu::item {
+    padding: 6px 20px;
+}
+
+QMenu::item:selected {
+    background-color: #cce4ff;      /* 下拉菜单悬停：浅蓝高亮 */
+    color: #003366;                 /* 深蓝文字 */
+}
+</string>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionNewProject"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionOpenProject"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSet">
+    <property name="title">
+     <string>Set</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionFont"/>
+    <addaction name="actionColor"/>
+   </widget>
+   <widget class="QMenu" name="menuBuild">
+    <property name="title">
+     <string>Build</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionCompile"/>
+    <addaction name="actionRun"/>
+   </widget>
+   <widget class="QMenu" name="menuTool">
+    <property name="title">
+     <string>Tool</string>
+    </property>
+    <addaction name="actionFindText"/>
+    <addaction name="actionFindNext"/>
+    <addaction name="actionFindPrevious"/>
+   </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuBuild"/>
+   <addaction name="menuSet"/>
+   <addaction name="menuTool"/>
+   <addaction name="menuTest"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string notr="true">/* ---------- 状态栏 ---------- */
+QStatusBar {
+    background-color: #f5faff;   /* 浅白偏蓝背景 */
+    color: #2a3b4c;              /* 深蓝灰文字 */
+    border-top: 1px solid #c0d0e0;  /* 顶部分割线（浅蓝灰） */
+    padding: 2px 4px;
+}
+
+QStatusBar QLabel {
+    color: #2a3b4c;              /* 状态栏上文字标签 */
+}
+</string>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* 工具栏背景 */
+QToolBar {
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #dce3ed,   /* 上方淡蓝灰 */
+        stop:1 #b0b8c8    /* 下方灰蓝色 */
+    );
+    spacing: 2px;          /* 工具项间距 */
+    padding: 2px;          /* 内边距 */
+    border: none;          /* 去掉边框 */
+}
+
+/* 工具栏按钮 */
+QToolButton {
+    background-color: transparent;  /* 默认透明 */
+    color: #2e3a50;                /* 深灰蓝文字/图标 */
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* 鼠标悬停 */
+QToolButton:hover {
+    background-color: rgba(50, 100, 180, 0.15); /* 柔和悬停蓝 */
+}
+
+/* 按下状态 */
+QToolButton:pressed {
+    background-color: rgba(50, 100, 180, 0.25); /* 略深悬停 */
+}
+
+/* 下拉按钮箭头 */
+QToolButton::menu-indicator {
+    image: none;  /* 隐藏默认小箭头 */
+}
+</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionCompile"/>
+   <addaction name="actionRun"/>
+   <addaction name="separator"/>
+   <addaction name="actionFindText"/>
+   <addaction name="actionAIImprove"/>
+   <addaction name="actionExit"/>
+   <addaction name="separator"/>
+   <addaction name="actionHelp"/>
+  </widget>
+  <widget class="QDockWidget" name="projectDock">
+   <property name="styleSheet">
+    <string notr="true">/* Dock 主体 - 低饱和度渐变 */
+QDockWidget {
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #f0f2f6,   /* 上方低饱和淡灰蓝 */
+        stop:1 #c0c6d8    /* 下方深蓝灰 */
+    );
+    border: 1px solid #7a8ba6;       /* 灰蓝边框 */
+    titlebar-close-icon: url(:/icons/close.png);
+    titlebar-normal-icon: url(:/icons/undock.png);
+}
+
+/* Dock 标题栏 */
+QDockWidget::title {
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #8aa0c4,   /* 上方浅蓝灰 */
+        stop:1 #617694    /* 下方深蓝灰 */
+    );
+    color: white;                    
+    padding: 4px 6px;
+    font-weight: bold;
+
+}
+
+/* Dock 分割线 */
+QSplitter::handle {
+    background-color: #617694;       /* 分割线蓝灰色 */
+    width: 4px;
+    height: 4px;
+}
+
+QSplitter::handle:hover {
+    background-color: #8aa0c4;       /* 悬停浅蓝灰 */
+}
+</string>
+   </property>
+   <property name="windowTitle">
+    <string>项目</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTreeView" name="projectTree"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockOutput">
+   <property name="maximumSize">
+    <size>
+     <width>524287</width>
+     <height>200</height>
+    </size>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::DockWidgetArea::BottomDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>编译输出</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QPlainTextEdit" name="outputWindow">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="aiChatDock">
+   <property name="minimumSize">
+    <size>
+     <width>300</width>
+     <height>248</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>600</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* Dock 整体内容背景（淡米灰渐变） */
+QDockWidget QWidget {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #f7f3ec,   /* 淡米色偏灰 */
+        stop:1 #e8e8e8    /* 浅灰色 */
+    );
+}
+
+/* Dock 标题栏保持原样 */
+QDockWidget::title {
+    text-align: center;
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #8aa0c4,
+        stop:1 #617694
+    );
+    color: #ffffff; 
+    font: bold 18px &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, &quot;SimHei&quot;; 
+    padding: 10px 4px;
+    min-height: 44px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* 标题栏 hover 效果 */
+QDockWidget::title:!hover {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #9bb4d6,
+        stop:1 #617694
+    );
+}
+QDockWidget::title:hover {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #a3bedc,
+        stop:1 #617694
+    );
+}
+
+/* 关闭按钮 */
+QDockWidget::close-button {
+    image: url(:/icons/close.png);
+    border: none;
+    background: transparent;
+    margin: 2px;
+    padding: 2px;
+}
+QDockWidget::close-button:hover {
+    background: rgba(138, 160, 196, 0.2);
+    border-radius: 4px;
+}
+
+/* 浮动按钮 */
+QDockWidget::float-button {
+    image: url(:/icons/undock.png);
+    border: none;
+    background: transparent;
+    margin: 2px;
+    padding: 2px;
+}
+QDockWidget::float-button:hover {
+    background: rgba(97, 118, 148, 0.2);
+    border-radius: 4px;
+}
+
+/* Dock 分割线 */
+QSplitter::handle {
+    background-color: #617694;
+    width: 4px;
+    height: 4px;
+}
+QSplitter::handle:hover {
+    background-color: #8aa0c4;
+}
+</string>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::DockWidgetArea::BottomDockWidgetArea|Qt::DockWidgetArea::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>AI 聊天助手</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <property name="maximumSize">
+     <size>
+      <width>1500</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">/* Dock 整体背景 */
+QDockWidget {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #fff8e7,   /* 上浅米色 */
+        stop:1 #f3ebd7    /* 下深米色 */
+    );
+    titlebar-close-icon: url(:/icons/close.png);
+    titlebar-normal-icon: url(:/icons/undock.png);
+    border: 2px solid #d2c7a5;  /* 米色深一点边框 */
+    border-radius: 8px;
+}
+
+/* Dock 标题栏 */
+QDockWidget::title {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #d9cfa8,   /* 上浅米色 */
+        stop:1 #b8ad8f    /* 下深米色 */
+    );
+    text-align: left;
+    padding-left: 8px;
+    font-family: &quot;SimSun&quot;;
+    font-size: 14px;
+    color: #5c4f2a;    /* 深米色文字 */
+    min-height: 36px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* 可选：关闭和浮动按钮悬停效果 */
+QDockWidget::close-button:hover,
+QDockWidget::float-button:hover {
+    background: rgba(210, 199, 165, 0.2);
+    border-radius: 4px;
+}
+</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <property name="styleSheet">
+        <string notr="true">/* Dock 整体 */
+QDockWidget {
+    border: 1px solid #d2c7a5;   /* 淡米色边框 */
+    border-radius: 8px;
+}
+
+/* Dock 标题栏 */
+QDockWidget::title {
+    text-align: center;
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #f3ebd7,   /* 上浅米色 */
+        stop:1 #e8dfc5    /* 下深米色 */
+    );
+    color: white;
+    font: bold 15px &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, &quot;SimHei&quot;;
+    padding: 8px 4px;
+    min-height: 36px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* Dock 内部 widget（内容区）淡米渐变 */
+QDockWidget QWidget {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #fff8e7,   /* 上浅米色 */
+        stop:1 #f3ebd7    /* 下深米色 */
+    );
+    border: none;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+/* 关闭按钮 */
+QDockWidget::close-button {
+    image: url(:/icons/close.png);
+    border: none;
+    background: transparent;
+    margin: 2px;
+    padding: 2px;
+}
+QDockWidget::close-button:hover {
+    background: rgba(210, 199, 165, 0.2); /* 淡米色悬停 */
+    border-radius: 4px;
+}
+
+/* 浮动按钮 */
+QDockWidget::float-button {
+    image: url(:/icons/undock.png);
+    border: none;
+    background: transparent;
+    margin: 2px;
+    padding: 2px;
+}
+QDockWidget::float-button:hover {
+    background: rgba(184, 173, 143, 0.2); /* 悬停深一点淡米色 */
+    border-radius: 4px;
+}
+
+/* Dock 分割线 */
+QSplitter::handle {
+    background-color: #b8ad8f;  /* 分割线淡米色 */
+    width: 4px;
+    height: 4px;
+}
+QSplitter::handle:hover {
+    background-color: #d2c7a5;  /* 分割线悬停浅米色 */
+}
+</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QTextEdit" name="aiChatOutput">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnClearHistory">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #5B7FA6;      /* 深灰蓝，沉稳 */
+    color: #FFFFFF;                 /* 白色文字 */
+    border: none;                   /* 去掉边框 */
+    border-radius: 8px;             /* 圆角 */
+    padding: 6px 14px;              /* 内边距 */
+    font-size: 14px;                /* 字体大小 */
+    font-family: &quot;Microsoft YaHei&quot;; /* 微软雅黑 */
+}
+
+QPushButton:hover {
+    background-color: #496885;      /* hover 深蓝灰，更有层次 */
+}
+
+QPushButton:pressed {
+    background-color: #384F66;      /* 按下更深蓝灰，稳重感更强 */
+}
+
+QPushButton:disabled {
+    background-color: #A0B0C0;      /* 灰蓝淡色 */
+    color: #D0D0D0;                 /* 灰文字 */
+}
+</string>
+          </property>
+          <property name="text">
+           <string>新建对话</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="aiChatInput">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">  QPlainTextEdit {
+        font-family: 'SimSun';   /* 宋体 */
+        font-size: 12pt;         /* 字体稍小 */
+        color: #333333;          /* 输入文字颜色 */
+        border: 2px solid #2196F3;
+        border-radius: 8px;
+        padding: 6px;
+        background-color: #f5f5f5;
+    }
+
+    QPlainTextEdit:empty {
+        color: #999999;          /* placeholder 颜色 */
+        font-style: italic;      /* placeholder 斜体 */
+        font-size: 12pt;         /* placeholder 字体大小 */
+    }
+
+    QPlainTextEdit:hover {
+        border: 2px solid #42A5F5;
+    }
+
+    QPlainTextEdit:focus {
+        border: 2px solid #1E88E5;
+    }
+</string>
+          </property>
+          <property name="backgroundVisible">
+           <bool>false</bool>
+          </property>
+          <property name="centerOnScroll">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>在这里输入你的问题，按 Enter 发送给 AI </string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-add-file-50.png</normaloff>:/new/prefix1/images/icons8-add-file-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>NewFile</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-file-50.png</normaloff>:/new/prefix1/images/icons8-file-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>OpenFile</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-save-50.png</normaloff>
+     <normalon>:/new/prefix1/images/icons8-save-50.png</normalon>:/new/prefix1/images/icons8-save-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionFont">
+   <property name="text">
+    <string>Font</string>
+   </property>
+  </action>
+  <action name="actionColor">
+   <property name="text">
+    <string>Color</string>
+   </property>
+  </action>
+  <action name="actionFindText">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-search-50.png</normaloff>:/new/prefix1/images/icons8-search-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>FindText</string>
+   </property>
+   <property name="toolTip">
+    <string>FindText</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+  <action name="actionCompile">
+   <property name="text">
+    <string>Compile</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="text">
+    <string>Run</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionFindPrevious">
+   <property name="text">
+    <string>FindPrevious</string>
+   </property>
+   <property name="toolTip">
+    <string>FindPrevious</string>
+   </property>
+  </action>
+  <action name="actionFindNext">
+   <property name="text">
+    <string>FindNext</string>
+   </property>
+   <property name="toolTip">
+    <string>FindNext</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-opened-folder-50.png</normaloff>:/new/prefix1/images/icons8-opened-folder-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>OpenProject</string>
+   </property>
+   <property name="toolTip">
+    <string>OpenProject</string>
+   </property>
+  </action>
+  <action name="actionNewProject">
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/new/prefix1/images/icons8-folder-50.png</normaloff>:/new/prefix1/images/icons8-folder-50.png</iconset>
+   </property>
+   <property name="text">
+    <string>NewProject</string>
+   </property>
+  </action>
+  <action name="actionAIImprove">
+   <property name="text">
+    <string>AIImprove</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
+ <connections/>
+</ui>
